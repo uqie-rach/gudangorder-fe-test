@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const loading = () => {
   return (
-    <div>
+    <div className="mx-auto">
       <div id="loading">
         <div id="loading-center">
           <div id="loading-center-absolute">
@@ -15,9 +15,9 @@ const loading = () => {
                     <circle stroke="red" cx="190" cy="190" r="180" strokeWidth="6" strokeLinecap="round"></circle>
                   </svg>
                 </div>
-                <Image src="assets/img/logo/preloader/preloader-icon.svg" alt="Preloader image" width={40} height={40} />
+                <Image src="/assets/img/logo/preloader/preloader-icon.svg" alt="Preloader image" width={40} height={40} />
               </div>
-              <h3 className="tp-preloader-title">Shofy</h3>
+              <h3 className="text-xl lg:text-2xl xl:text-[52px] font-bold py-4">Gudangorder</h3>
               <p className="tp-preloader-subtitle">Loading</p>
             </div>
           </div>
