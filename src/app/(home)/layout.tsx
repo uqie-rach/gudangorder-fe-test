@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/navbar";
 
 export default function HomeLayout({
   children,
@@ -6,6 +7,7 @@ export default function HomeLayout({
 }>) {
   return (
     <div className="container">
+      <Navbar />
       {children}
     </div>
   );
