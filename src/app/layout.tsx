@@ -44,9 +44,7 @@ export default function RootLayout({
       <body
         className={`${raleway.className} ${jost.className} antialiased`}
       >
-        <div className="container">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
