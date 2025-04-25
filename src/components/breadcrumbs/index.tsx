@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
 interface BreadcrumbItem {
@@ -8,13 +9,21 @@ interface BreadcrumbItem {
 interface BreadcrumbProps {
   items: BreadcrumbItem[]
   className?: string
+  xPos?: 'left' | 'right' | 'center'
 }
 
-const Breadcrumb = ({ items, className = '' }: BreadcrumbProps) => {
+const Breadcrumb = ({ items, className = '', xPos }: BreadcrumbProps) => {
+  const position = xPos === 'left' ? 'items-start' : xPos === 'right' ? 'items-end' : 'items-center'
+
   return (
-    <section className={`py-3 ${className}`}>
+    <section className={`py-2 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-center space-y-4">
+        <div className={
+          cn(
+            "flex flex-col justify-center space-y-4",
+            position
+          )
+        }>
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center flex-wrap justify-center space-x-2 text-sm text-gray-500">
             {items.map((item, index) => (
