@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const publicRoutes = [
-  '/',
-  '/login(.*)',
-  '/register(.*)',
-  '/search(.*)',
-]
+// const publicRoutes = [
+//   '/',
+//   '/login(.*)',
+//   '/register(.*)',
+//   '/search(.*)',
+//   '/cart',
+//   '/products(.*)',
+//   '/checkout(.*)',
+//   '/contact'
+// ]
 
 const privateRoutes = [
   '/dashboard(.*)',
@@ -14,7 +18,7 @@ const privateRoutes = [
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  const isAuth = true
+  const isAuth = false
   const isLoginPage = pathname === '/login' || pathname.startsWith('/login')
   const isRegisterPage = pathname === '/register' || pathname.startsWith('/register')
 
@@ -39,6 +43,9 @@ export function middleware(req: NextRequest) {
    */
   if (!isAuth && isAccessingProtectedRoute)
     return NextResponse.redirect(new URL('/login', req.url))
+
+  if (pathname === '/')
+    return NextResponse.redirect(new URL('/products', req.url))
 }
 
 export const config = {
