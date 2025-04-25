@@ -6,9 +6,13 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="container">
-      <Navbar />
-      {children}
+    <div>
+      <div className="container">
+        <Navbar />
+      </div>
+      <div className="container mt-40">
+        {children}
+      </div>
     </div>
   );
 }
