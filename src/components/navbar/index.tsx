@@ -35,7 +35,7 @@ export const Navbar = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isScrolled]);
 
   const toggleCanvas = () => {
     setIsOpened(!isOpened);
@@ -151,8 +151,11 @@ export const Navbar = () => {
                                 logout();
                                 router.push('/login');
                               }}
+                              asChild
                             >
-                              Log Out
+                              <Link href='/login'>
+                                Log Out
+                              </Link>
                             </Button>
                           </li>
                         ) : (
@@ -164,8 +167,11 @@ export const Navbar = () => {
                               onClick={() => {
                                 router.push('/login');
                               }}
+                              asChild
                             >
-                              Log In
+                              <Link href='/login'>
+                                Log In
+                              </Link>
                             </Button>
                           </li>
                         )
