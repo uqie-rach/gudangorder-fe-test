@@ -12,7 +12,6 @@ import "@/css/swiper-bundle.css"
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { Navbar } from "@/components/navbar";
 config.autoAddCss = false
 
 const raleway = Raleway({
@@ -42,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${raleway.className} ${jost.className} antialiased`}
+        className={`${raleway.className} ${jost.className} antialiased mt-[120px]`}
       >
         {children}
       </body>
