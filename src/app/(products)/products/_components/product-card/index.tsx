@@ -1,104 +1,143 @@
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { formatPriceToRupiah } from "@/lib/utils";
-import { useUserStore } from "@/store/use-user";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Rating } from '@smastrom/react-rating'
+"use client"
 
-import '@smastrom/react-rating/style.css'
-import Image from "next/image";
-import Link from "next/link";
-
+import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Card, CardContent } from "@/components/ui/card"
+import { Eye, Heart, ShoppingCart, Star } from "lucide-react"
+import { Review } from "@/lib/types"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface ProductCardProps {
-  title: string;
-  rating: number;
-  price: number;
-  category: string;
-  image: string;
-  oldPrice?: number;
-  slug: string;
+  id: string | number
+  title: string
+  price: number
+  originalPrice?: number
+  image: string
+  category?: string
+  rating: number
+  reviews: number
+  badge?: {
+    text: string
+    type: "hot" | "trending" | "sale" | "discount"
+  }
+  onQuickView?: (id: string) => void
+  onAddToCart?: (id: string) => void
+  onAddToWishlist?: (id: string) => void
 }
 
-const ProductCard = (
-  { title, slug, rating, price, category, image, oldPrice }: ProductCardProps
-) => {
+export default function ProductCard({
+  id,
+  title,
+  price,
+  originalPrice,
+  image,
+  category,
+  rating,
+  reviews,
+  badge,
+  onQuickView,
+  onAddToCart,
+  onAddToWishlist,
+}: ProductCardProps) {
+  const [isHovered, setIsHovered] = useState(false)
 
-  const { isAuthenticated } = useUserStore();
+  const getBadgeColor = (type: string) => {
+    switch (type) {
+      case "hot":
+        return "bg-red-500"
+      case "trending":
+        return "bg-green-500"
+      case "sale":
+        return "bg-blue-500"
+      case "discount":
+        return "bg-orange-500"
+      default:
+        return "bg-gray-500"
+    }
+  }
 
   return (
-    <div className="w-full">
-      <div className="tp-product-item-2 h-full">
-        <div className="tp-product-thumb-2 p-relative z-index-1 fix w-img">
-          <Link href={`products/${slug}`}>
-            <Image src={image} alt={title} width={516} height={548} className="aspect-square object-cover" />
-          </Link>
-          {/* <!-- product action --> */}
-          {/* <div className="tp-product-action-2 tp-product-action-blackStyle">
-            <div className="tp-product-action-item-2 d-flex flex-column space-y-3">
-              <button type="button" className="bg-blue-50 hover:bg-blue-100 transition-colors w-[40px] h-[40px] rounded-full flex items-center justify-center shadow-md">
-                <FontAwesomeIcon icon={faShoppingCart} size="sm" className="text-blue-500" />
-                <span className="tp-product-tooltip tp-product-tooltip-right">Add to Cart</span>
-              </button>
-              <button type="button" className="tp-product-action-btn-2 tp-product-quick-view-btn" data-bs-toggle="modal" data-bs-target="#producQuickViewModal">
-                <FontAwesomeIcon icon={faEye} size="sm" />
-                <span className="tp-product-tooltip tp-product-tooltip-right">Quick View</span>
-              </button>
-              <button type="button" className="bg-red-50 hover:bg-red-100 transition-colors w-[40px] h-[40px] rounded-full flex items-center justify-center shadow-md">
-                <FontAwesomeIcon icon={faHeart} size="sm" className="text-red-500" />
-                <span className="tp-product-tooltip tp-product-tooltip-right">Add To Wishlist</span>
-              </button>
+    <Card className="group relative overflow-hidden transition-all duration-300 shadow-none">
+      <CardContent className="p-0">
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {badge && (
+            <span
+              className={`absolute left-3 top-3 z-10 rounded-md ${getBadgeColor(badge.type)} px-2 py-1 text-xs text-white`}
+            >
+              {badge.text}
+            </span>
+          )}
+
+          <Link href={`/products/${id}`} className="block">
+            <div className="relative h-48 overflow-hidden">
+              <Image
+                src={image || "/placeholder.svg?height=200&width=200"}
+                alt={title}
+                fill
+                className="object-contain transition-transform duration-300 group-hover:scale-105"
+              />
             </div>
-          </div> */}
+          </Link>
+
+          {/* Product action buttons */}
+          <div
+            className={`absolute bottom-0 left-0 right-0 flex justify-center space-x-2 bg-white/80 p-2 backdrop-blur-sm transition-all duration-300 ${isHovered ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+              }`}
+          >
+            <button
+              onClick={() => onQuickView?.(id)}
+              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
+              aria-label="Quick view"
+            >
+              <Eye className="h-4 w-4 text-gray-600" />
+            </button>
+            <button
+              onClick={() => onAddToCart?.(id)}
+              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
+              aria-label="Add to cart"
+            >
+              <ShoppingCart className="h-4 w-4 text-gray-600" />
+            </button>
+            <button
+              onClick={() => onAddToWishlist?.(id)}
+              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
+              aria-label="Add to wishlist"
+            >
+              <Heart className="h-4 w-4 text-gray-600" />
+            </button>
+          </div>
         </div>
-        <div className="tp-product-content-2 pt-15">
-          <div className="tp-product-tag-2">
-            <a href="#">{category}</a>
-          </div>
-          <h3 className="tp-product-title-2">
-            <Link href={`/${slug}`}>
-              {title}
-            </Link>
-          </h3>
-          <div className="my-2 flex items-center gap-2">
-            <Rating
-              style={{ maxWidth: 70 }}
-              value={rating}
-              readOnly
-            />
-            {rating}
-          </div>
-          <div className="tp-product-price-wrapper-2 mb-3">
-            <span className="tp-product-price-2 new-price">
-              {formatPriceToRupiah(price)}
-            </span>
-            <span className="tp-product-price-2 old-price">
-              {oldPrice ? formatPriceToRupiah(oldPrice) : ""}
-            </span>
+
+        <div className="p-4">
+          {category && <div className="mb-1 text-xs text-blue-500">{category}</div>}
+          <h3 className="mb-1 text-sm font-medium line-clamp-2">{title}</h3>
+
+          <div className="mb-2 flex items-center">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`h-3 w-3 ${i < Math.floor(rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+              />
+            ))}
+            <span className="ml-1 text-xs text-gray-500">({reviews})</span>
           </div>
 
-          {/* Product action button */}
-          {
-            isAuthenticated && (
-              <div className="flex gap-x-3">
-                <Button className="bg-blue-50 hover:bg-blue-100 flex items-center justify-center shadow-md">
-                  <FontAwesomeIcon icon={faShoppingCart} size="sm" className="text-blue-500" />
-                </Button>
-                <Button className="bg-red-50 hover:bg-red-100 flex items-center justify-center shadow-md">
-                  <FontAwesomeIcon icon={faHeart} size="sm" className="text-red-500" />
-                </Button>
-              </div>
-            )
-          }
+          <div className="flex items-center">
+            <span className="text-sm font-medium">${price.toFixed(2)}</span>
+            {originalPrice && (
+              <span className="ml-2 text-xs text-gray-500 line-through">${originalPrice.toFixed(2)}</span>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
-
-export default ProductCard;
 
 export const ProductCardSkeleton = () => {
   return (

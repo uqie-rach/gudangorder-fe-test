@@ -62,13 +62,23 @@ export default function ProductsPage() {
         <div className="col-span-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 gap-y-6">
           {showing.map((product) => (
             <ProductCard
-              key={product.id}
-              slug={product.title}
+              id={product.id}
               title={product.title}
-              rating={product.rating}
               price={product.price}
-              category={product.category}
+              originalPrice={product.price}
               image={product.images[0]}
+              category={product.category}
+              rating={product.rating}
+              reviews={product.reviews.length}
+              badge={
+                {
+                  text: "New",
+                  type: "sale"
+                }
+              }
+              onQuickView={() => { }}
+              onAddToCart={() => { }}
+              onAddToWishlist={() => { }}
             />
           ))}
         </div>
