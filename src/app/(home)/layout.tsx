@@ -10,7 +10,7 @@ export default function HomeLayout({
       <div className="container">
         <Navbar />
       </div>
-      <div className="container mt-40">
+      <div className="mt-40">
         {children}
       </div>
     </div>

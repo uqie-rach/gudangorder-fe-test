@@ -1,13 +1,20 @@
 'use client'
 
 import Image from 'next/image';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
 const Logo = () => {
   const isMobile = useMediaQuery(`(max-width: 768px)`);
+  const [content, setContent] = useState('GO')
 
   useEffect(() => {
+
+    if (isMobile) {
+      setContent('GO')
+    } else {
+      setContent('Gudangorder')
+    }
   }, [isMobile])
 
 
@@ -21,7 +28,7 @@ const Logo = () => {
       />
       <h1 className='text-2xl font-bold m-0'>
         {
-          isMobile ? "GO" : "Gudangorder"
+          content
         }
       </h1>
     </div>
