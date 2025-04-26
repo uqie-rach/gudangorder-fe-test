@@ -8,7 +8,7 @@ import { Eye, Heart, ShoppingCart, Star } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 
 interface ProductCardProps {
-  id: string | number
+  id: string
   title: string
   price: number
   originalPrice?: number
