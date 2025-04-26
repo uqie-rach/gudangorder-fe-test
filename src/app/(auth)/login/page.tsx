@@ -9,13 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons/faEyeSlash";
 
 import Breadcrumb from "@/components/breadcrumbs";
+import { useUserStore } from "@/store/use-user";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [showPasswd, setShowPasswd] = useState(false);
 
+  const { login } = useUserStore()
+  const router = useRouter()
+
   const handleSubmit = () => {
     // Handle form submission logic here
     console.log("Form submitted");
+    login();
+    router.push("/")
   };
 
   return (
@@ -49,7 +56,7 @@ const LoginPage = () => {
                 <div className="tp-login-top text-center mb-30">
                   <h3 className="tp-login-title ">Login to Gudangorder.</h3>
                   <p className="">
-                    Don't have an account?
+                    Don&apos;t have an account?
                     <span className="ml-1">
                       <Link href="/register">Create a free account</Link>
                     </span>

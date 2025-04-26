@@ -3,15 +3,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDashboard } from '@fortawesome/free-solid-svg-icons/faDashboard';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
-import { faChevronRight, faGripVertical, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faDoorClosed, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 
 
 import { navbarItems } from '@/lib/constants';
 import { useUserStore } from '@/store/use-user';
 import { cn } from '@/lib/utils';
+import Logo from '../logo';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,12 +23,14 @@ export const Navbar = () => {
   const [openAllCategories, setOpenAllCategories] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState('');
 
-  const { data } = useUserStore(state => state);
+  const { isAuthenticated, logout } = useUserStore(state => state);
+
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 100); // Ubah nilai 100 sesuai dengan kebutuhan
+      setIsScrolled(scrollPosition > 50); // Ubah nilai 100 sesuai dengan kebutuhan
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -39,28 +45,28 @@ export const Navbar = () => {
     <>
       <header className={
         cn(
-          'w-full container',
-          isScrolled ? 'fixed' : 'relative'
+          'w-full z-[999] transition-all bg-white fixed top-0 left-0 right-0',
+          isScrolled ? 'shadow-lg' : ''
         )
       }>
         {/* Main navbar area */}
-        <div className="tp-header-area relative z-[11]">
-          <div className="tp-mega-menu-wrapper p-relative">
-            <div className="row align-items-center container py-2 md:py-3">
+        <div className="container relative z-[11]">
+          <div className="relative">
+            <div className="flex items-center justify-between h-[80px]">
               {/* Logo */}
-              <div className="col-xl-2 col-lg-5 col-md-5 col-sm-4 col-6">
+              <div className="">
                 <div className="logo">
                   <Link href="/">
-                    <img src="/assets/img/logo/logo.svg" alt="logo" />
+                    <Logo />
                   </Link>
                 </div>
               </div>
 
               {/* Services */}
-              <div className="col-xl-5 d-none d-xl-block">
+              <div className="hidden xl:flex items-center justify-between">
                 <div className="main-menu menu-style-2">
-                  <nav className="tp-main-menu-content">
-                    <ul>
+                  <nav className="">
+                    <ul className='flex items-center'>
                       <li>
                         <Link href="/">Home</Link>
                       </li>
@@ -96,12 +102,10 @@ export const Navbar = () => {
                           <li className="has-dropdown">
                             <Link href="shop.html" className="mega-menu-title">eCommerce</Link>
                             <ul className="tp-submenu">
-                              <li><Link href="cart.html">Shopping Cart</Link></li>
-                              <li><Link href="order.html">Track Your Order</Link></li>
-                              <li><Link href="compare.html">Compare</Link></li>
-                              <li><Link href="wishlist.html">Wishlist</Link></li>
-                              <li><Link href="checkout.html">Checkout</Link></li>
-                              <li><Link href="profile.html">My account</Link></li>
+                              <li><Link href="/cart">Shopping Cart</Link></li>
+                              <li><Link href="/order">Track Your Order</Link></li>
+                              <li><Link href="/wishlist">Wishlist</Link></li>
+                              <li><Link href="/profile">My account</Link></li>
                             </ul>
                           </li>
 
@@ -110,11 +114,11 @@ export const Navbar = () => {
                             <ul className="tp-submenu">
 
 
-                              <li><Link href="about.html">About</Link></li>
-                              <li><Link href="login.html">Login</Link></li>
-                              <li><Link href="register.html">Register</Link></li>
-                              <li><Link href="forgot.html">Forgot Password</Link></li>
-                              <li><Link href="404.html">404 Error</Link></li>
+                              <li><Link href="/about">About</Link></li>
+                              <li>
+                                <Link href="/login" >Login</Link>
+                              </li>
+                              <li><Link href="/register">Register</Link></li>
                             </ul>
                           </li>
 
@@ -127,24 +131,42 @@ export const Navbar = () => {
                         <Link href="/contact">Contact</Link>
                       </li>
                       {
-                        data ? (
+                        isAuthenticated && (
                           <li>
                             <Link
                               href="/dashboard"
-                              className='text-sm font-medium bg-blue-100 hover:text-white px-4 py-2'
                             >
-                              <FontAwesomeIcon icon={faGripVertical} className="mr-2" />
                               Dashboard
                             </Link>
                           </li>
+                        )
+                      }
+                      {
+                        isAuthenticated ? (
+                          <li>
+                            <Button
+                              variant='destructive'
+                              className='text-white hover:text-white h-fit py-2 px-3'
+                              onClick={() => {
+                                logout();
+                                router.push('/login');
+                              }}
+                            >
+                              Log Out
+                            </Button>
+                          </li>
                         ) : (
                           <li>
-                            <Link
-                              href="/login"
-                              className='text-sm font-medium bg-blue-100 text-gray-900 hover:bg-blue-500 block hover:text-white px-4 py-2'
+                            <Button
+                              variant='default'
+                              className='text-white hover:text-white h-fit py-2 px-3'
+                              size='sm'
+                              onClick={() => {
+                                router.push('/login');
+                              }}
                             >
-                              Log
-                              In</Link>
+                              Log In
+                            </Button>
                           </li>
                         )
                       }
@@ -181,7 +203,7 @@ export const Navbar = () => {
                             <ul>
                               <li>
                                 <Link href="shop.html">
-                                  <img src="/assets/img/header/menu/menu-1.jpg" alt="" />
+                                  {/* <img src="/assets/img/header/menu/menu-1.jpg" alt="" /> */}
                                 </Link>
                               </li>
                               <li>
@@ -201,7 +223,7 @@ export const Navbar = () => {
                             <ul>
                               <li>
                                 <Link href="shop.html">
-                                  <img src="/assets/img/header/menu/menu-2.jpg" alt="" />
+                                  {/* <img src="/assets/img/header/menu/menu-2.jpg" alt="" /> */}
                                 </Link>
                               </li>
                               <li>
@@ -220,7 +242,7 @@ export const Navbar = () => {
                             <ul>
                               <li>
                                 <Link href="shop.html">
-                                  <img src="/assets/img/header/menu/menu-3.jpg" alt="" />
+                                  {/* <img src="/assets/img/header/menu/menu-3.jpg" alt="" /> */}
                                 </Link>
                               </li>
                               <li>
@@ -345,17 +367,11 @@ export const Navbar = () => {
               </div>
 
               {/* Miscellaneous */}
-              <div className="col-xl-5 col-lg-7 col-md-7 col-sm-8 col-6">
+              <div className="">
                 <div className="tp-header-bottom-right d-flex align-items-center justify-content-end pl-30">
                   <div className="tp-header-search-2 d-none d-sm-block">
                     <form action="#">
-                      <input type="text" placeholder="Search for Products..." />
-                      <button type="submit">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M18.9999 19L14.6499 14.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      </button>
+                      <Input type="text" placeholder="Search Products" />
                     </form>
                   </div>
                   <div className="tp-header-action d-flex align-items-center ml-30">
@@ -417,7 +433,7 @@ export const Navbar = () => {
           isOpened ? "offcanvas-opened" : ""
         )
       }>
-        <div className="offcanvas__wrapper">
+        <div className="offcanvas__wrapper h-full flex flex-col justify-between">
           <div className="offcanvas__close">
             <button
               className="offcanvas__close-btn offcanvas-close-btn"
@@ -429,7 +445,7 @@ export const Navbar = () => {
               </svg>
             </button>
           </div>
-          <div className="offcanvas__content">
+          <div>
             <div className="offcanvas__top mb-70 d-flex justify-content-between align-items-center">
               <div className="offcanvas__logo logo">
                 <Link href="/" onClick={() => toggleCanvas()}>
@@ -438,11 +454,12 @@ export const Navbar = () => {
               </div>
             </div>
             <div className="offcanvas__category pb-40">
-              <button
-                className="tp-offcanvas-category-toggle justify-between items-center w-full text-left"
+              <Button
+                variant='default'
+                className="justify-between flex items-center w-full text-left py-4"
                 onClick={() => setOpenAllCategories(!openAllCategories)}
               >
-                <div>
+                <div className='flex items-center gap-x-2'>
                   <FontAwesomeIcon icon={faBars} size='sm' />
                   All Categories
                 </div>
@@ -456,7 +473,7 @@ export const Navbar = () => {
                     )
                   }
                 />
-              </button>
+              </Button>
               <div className="tp-category-mobile-menu">
                 <nav className="tp-category-menu-content transition-all" style={{ display: openAllCategories ? "block" : "none" }}>
                   <ul className='transition-all'>
@@ -476,11 +493,10 @@ export const Navbar = () => {
 
             {/* Offcanvas nav list */}
             <div className="fix mb-40">
-              <nav >
+              <nav className='flex flex-col justify-between'>
                 <ul className='space-y-2'>
                   {
                     navbarItems.map((item, idx) => {
-                      console.log(activeDropdown)
                       return (
                         <li className='space-y-2' key={idx + item.title}>
                           <span className="flex justify-between items-center w-full">
@@ -526,27 +542,14 @@ export const Navbar = () => {
                       )
                     })
                   }
-
-                  <br />
                   {
-                    !data ? (
-                      <li className='text-sm font-medium bg-blue-100 hover:text-white px-4 py-2 w-fit'>
+                    isAuthenticated && (
+                      <li>
                         <Link
                           href="/dashboard"
+                          className='text-base hover:text-blue-500 py-1.5'
                         >
-                          <FontAwesomeIcon icon={faGripVertical} className="mr-2" />
                           Dashboard
-                        </Link>
-                      </li>
-                    ) : (
-                      <li
-                        className='text-base font-medium bg-blue-500 w-fit text-white block px-4 py-2'
-                      >
-                        <Link
-                          href="/login"
-                          onClick={() => toggleCanvas()}
-                        >
-                          Log In <FontAwesomeIcon className='ml-2' icon={faRightToBracket} />
                         </Link>
                       </li>
                     )
@@ -554,20 +557,41 @@ export const Navbar = () => {
                 </ul>
               </nav>
             </div>
-
-            <div className="offcanvas__contact align-items-center d-none">
-              <div className="offcanvas__contact-icon mr-20">
-                <span>
-                  <img src="/assets/img/icon/contact.png" alt="" />
-                </span>
-              </div>
-              <div className="offcanvas__contact-content">
-                <h3 className="offcanvas__contact-title">
-                  <Link href="tel:098-852-987">004524865</Link>
-                </h3>
-              </div>
-            </div>
           </div>
+
+          {/* Logout or Login button */}
+          {
+            isAuthenticated ? (
+              <div>
+                <Button
+                  variant='destructive'
+                  onClick={() => {
+                    logout();
+                    router.push('/login');
+                  }}
+                >
+                  <FontAwesomeIcon className='ml-2' icon={faDoorClosed} />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className=' mt-4'>
+                <Button
+                  variant='default'
+                  className='hover:text-white'
+                  asChild
+                >
+                  <Link
+                    href="/login"
+                    onClick={() => toggleCanvas()}
+                  >
+                    <FontAwesomeIcon className='ml-2' icon={faDoorOpen} />
+                    Log In
+                  </Link>
+                </Button>
+              </div>
+            )
+          }
         </div>
       </div>
       <div className={

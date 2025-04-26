@@ -1,6 +1,7 @@
+import Footer from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
-export default function HomeLayout({
+export default function ProductLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -10,8 +11,11 @@ export default function HomeLayout({
       <div className="container">
         <Navbar />
       </div>
-      <div className="container mt-40">
+      <div className="mt-40">
         {children}
+      </div>
+      <div className="container">
+        <Footer />
       </div>
     </div>
   );

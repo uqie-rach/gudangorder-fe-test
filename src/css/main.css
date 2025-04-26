@@ -4239,7 +4239,7 @@ only screen and (min-width: 576px) and (max-width: 767px),
 .tp-offcanvas-category-toggle {
   font-size: 16px;
   color: var(--tp-common-white);
-  display: block;
+  display: flex;
   position: relative;
   width: 100%;
   text-align: left;
@@ -22185,7 +22185,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
   margin-bottom: 10px;
 }
 
-.tp-shop-widget-categories ul li a {
+.tp-shop-widget-categories ul li a,
+.tp-shop-widget-categories ul li button {
   font-weight: 400;
   font-size: 15px;
   color: var(--tp-text-body);
@@ -22201,7 +22202,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
   width: 100%;
 }
 
-.tp-shop-widget-categories ul li a::after {
+.tp-shop-widget-categories ul li a::after,
+.tp-shop-widget-categories ul li button::after {
   position: absolute;
   content: "";
   top: 10px;
@@ -22213,21 +22215,25 @@ only screen and (min-width: 576px) and (max-width: 767px),
   border-radius: 50%;
 }
 
-.tp-shop-widget-categories ul li a:hover {
+.tp-shop-widget-categories ul li a:hover,
+.tp-shop-widget-categories ul li button:hover {
   color: var(--tp-theme-primary);
 }
 
-.tp-shop-widget-categories ul li a:hover::after {
+.tp-shop-widget-categories ul li a:hover::after,
+.tp-shop-widget-categories ul li button:hover::after {
   background-color: var(--tp-theme-primary);
 }
 
-.tp-shop-widget-categories ul li a:hover span {
+.tp-shop-widget-categories ul li a:hover span,
+.tp-shop-widget-categories ul li button:hover span {
   background-color: var(--tp-theme-primary);
   border-color: var(--tp-theme-primary);
   color: var(--tp-common-white);
 }
 
-.tp-shop-widget-categories ul li a span {
+.tp-shop-widget-categories ul li a span,
+.tp-shop-widget-categories ul li button span {
   font-weight: 500;
   font-size: 12px;
   line-height: 1;
@@ -26183,12 +26189,14 @@ only screen and (min-width: 576px) and (max-width: 767px),
   margin-left: 10px;
 }
 
-[dir=rtl] .tp-shop-widget-categories ul li a {
+[dir=rtl] .tp-shop-widget-categories ul li a,
+[dir=rtl] .tp-shop-widget-categories ul li button {
   padding-right: 16px;
   padding-left: 0;
 }
 
-[dir=rtl] .tp-shop-widget-categories ul li a::after {
+[dir=rtl] .tp-shop-widget-categories ul li a::after,
+[dir=rtl] .tp-shop-widget-categories ul li button::after {
   right: 0;
   left: auto;
 }

@@ -1,0 +1,28 @@
+import { useState } from 'react';
+import { ProductPreviewProps } from '@/lib/types';
+import { ThumbnailList } from './thumbnail-list';
+import { MainImage } from './main-image';
+
+export const ProductPreview = ({ images }: ProductPreviewProps) => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  // Guard against empty images array
+  if (!images.length) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col md:flex-row gap-4 p-4">
+      <div className="w-full md:w-24">
+        <ThumbnailList
+          images={images}
+          activeIndex={activeIndex}
+          onImageClick={setActiveIndex}
+        />
+      </div>
+      <div className="flex-1">
+        <MainImage imageUrl={images[activeIndex]} />
+      </div>
+    </div>
+  );
+};

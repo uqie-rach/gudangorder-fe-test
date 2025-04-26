@@ -21,7 +21,7 @@ const NotFoundPage = () => {
                 </div>
 
                 <h3 className="font-sans font-extrabold text-xl xl:text-3xl 2xl:text-4xl">Oops! Page not found</h3>
-                <p className="font-sans text-gray-600 text-sm md:text-base">Whoops, this is embarassing. Looks like the page you were looking for wasn't found.</p>
+                <p className="font-sans text-gray-600 text-sm md:text-base">Whoops, this is embarassing. Looks like the page you were looking for wasn&apos;t found.</p>
                 <Link href="/" className="tp-error-btn">Back to Home</Link>
               </div>
             </div>
