@@ -5,7 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react"
-import { Review } from "@/lib/types"
 import { Skeleton } from "@/components/ui/skeleton"
 
 interface ProductCardProps {
