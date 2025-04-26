@@ -62,6 +62,7 @@ export default function ProductsPage() {
         <div className="col-span-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 gap-y-6">
           {showing.map((product) => (
             <ProductCard
+              key={product.id}
               id={product.id}
               title={product.title}
               price={product.price}
