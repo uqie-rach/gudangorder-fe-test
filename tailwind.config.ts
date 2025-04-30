@@ -51,6 +51,9 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
+      backgroundImage: {
+        "category-radial-gradient": 'radial-gradient(circle, white, theme(colors.blue.100))'
+      },
   		fontFamily: {
   			sans: [
   				'var(--font-sans)',

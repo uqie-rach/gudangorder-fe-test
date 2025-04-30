@@ -44,8 +44,8 @@ export function middleware(req: NextRequest) {
   if (!isAuth && isAccessingProtectedRoute)
     return NextResponse.redirect(new URL('/login', req.url))
 
-  if (pathname === '/')
-    return NextResponse.redirect(new URL('/products', req.url))
+  // if (pathname === '/')
+  //   return NextResponse.redirect(new URL('/products', req.url))
 }
 
 export const config = {

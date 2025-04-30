@@ -1,19 +1,11 @@
-import { Product } from "@/lib/types";
 import ProductDetailCard from "./_components/product-detail-card";
+
+import { Product } from "@/lib/types";
 
 interface ProductDetailProps {
   params: {
     slug: string;
   };
-}
-
-export async function generateStaticParams() {
-  const res = await fetch('https://dummyjson.com/products');
-  const data = await res.json();
-
-  return data.products.map((product: Product) => ({
-    slug: product.title, // atau kalau mau lebih aman pakai ID
-  }));
 }
 
 const ProductDetail = async ({ params }: ProductDetailProps) => {
