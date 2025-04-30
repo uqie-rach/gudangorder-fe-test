@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+
 import ProductCard, { ProductCardSkeleton } from "@/app/(products)/products/_components/product-card"
+
 import { Product } from "@/lib/types"
 import { mockProducts } from "@/lib/data/products"
 
