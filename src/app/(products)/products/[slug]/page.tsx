@@ -1,6 +1,5 @@
-import ProductDetailCard from "./_components/product-detail-card";
-
 import { Product } from "@/lib/types";
+import ProductDetailCard from "./_components/product-detail-card";
 
 interface ProductDetailProps {
   params: {
@@ -20,7 +19,7 @@ const ProductDetail = async ({ params }: ProductDetailProps) => {
 
   return (
     <div className="container">
-      <ProductDetailCard data={data.products[0]} />
+      <ProductDetailCard product={data.products[0]} />
     </div>
   )
 }
