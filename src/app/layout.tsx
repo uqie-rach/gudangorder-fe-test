@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Jost, Raleway } from "next/font/google"
+import { Toaster } from "sonner";
+
 import "./globals.css";
 
 import "@/css/bootstrap.css"
@@ -9,6 +11,7 @@ import "@/css/main.css"
 import "@/css/slick.css"
 import "@/css/spacing.css"
 import "@/css/swiper-bundle.css"
+import '@smastrom/react-rating/style.css'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -44,6 +47,7 @@ export default function RootLayout({
         className={`${raleway.className} ${jost.className} antialiased mt-[120px]`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
