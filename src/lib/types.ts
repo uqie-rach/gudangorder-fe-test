@@ -38,7 +38,7 @@ export interface Review {
   reviewerEmail: string;
   rating: number;
   comment: string;
-  date: string;
+  date?: string;
 }
 
 export interface User {

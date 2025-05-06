@@ -114,7 +114,7 @@ const ProductReview = ({ data }: ProductReviewProps) => {
                                 value={review.rating}
                                 readOnly
                                 style={{
-                                  maxWidth: 70
+                                  maxWidth: 120
                                 }}
 
                               />
@@ -147,11 +147,17 @@ const ProductReview = ({ data }: ProductReviewProps) => {
                 <div className="tp-product-details-review-form-rating d-flex align-items-center">
                   <p>Your Rating :</p>
                   <div className="tp-product-details-review-form-rating-icon d-flex align-items-center">
-                    <span><i className="fa-solid fa-star"></i></span>
-                    <span><i className="fa-solid fa-star"></i></span>
-                    <span><i className="fa-solid fa-star"></i></span>
-                    <span><i className="fa-solid fa-star"></i></span>
-                    <span><i className="fa-solid fa-star"></i></span>
+                    <Rating
+                      className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                      value={0}
+                      style={{
+                        maxWidth: 100
+                      }}
+                      readOnly={false}
+                      onChange={(v: number) => {
+                        console.log(v);
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="tp-product-details-review-input-wrapper">

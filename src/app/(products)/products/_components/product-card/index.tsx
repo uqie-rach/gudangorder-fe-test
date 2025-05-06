@@ -73,7 +73,7 @@ export default function ProductCard({
             </span>
           )}
 
-          <Link href={`/products/${id.toString()}`} className="block">
+          <Link href={`/products/${title.replaceAll(' ', '-')}`} className="block">
             <div className="relative h-48 overflow-hidden">
               <Image
                 src={image || "/placeholder.svg?height=200&width=200"}
