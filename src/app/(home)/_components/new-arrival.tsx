@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+
 import ProductCard, { ProductCardSkeleton } from "@/app/(products)/products/_components/product-card"
+
 import { Product } from "@/lib/types"
 import { mockProducts } from "@/lib/data/products"
 
@@ -83,7 +85,7 @@ export default function NewArrivals() {
 
         <div
           ref={containerRef}
-          className="flex space-x-4 overflow-x-auto pb-4"
+          className="flex space-x-4 overflow-x-auto pb-4 w-full"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {products.length === 0 &&
@@ -91,7 +93,7 @@ export default function NewArrivals() {
               <ProductCardSkeleton key={i} />
             ))
           }
-          {products.map((product) => (
+          {products.length !== 0 && products.map((product) => (
             <div key={product.id} className="w-64 flex-shrink-0">
               <ProductCard
                 id={product.id}
