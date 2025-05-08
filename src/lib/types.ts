@@ -1,18 +1,35 @@
 export interface Product {
-  id: string;
+  id: number;
   title: string;
   rating: number;
   price: number;
   category: string;
   images: string[];
   description: string;
-  brand: string;
+  brand?: string;
   discountPercentage: number;
+  weight: number;
+  tags: string[];
   stock: number;
   sku: string;
   reviews: Review[];
-  createdAt: string;
-  updatedAt: string;
+  returnPolicy: string;
+  minimumOrderQuantity: number;
+  meta: {
+    createdAt: string;
+    updatedAt: string;
+    barcode: string;
+    qrCode: string;
+  },
+  thumbnail: string;
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
+  },
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
 }
 
 export interface Review {
@@ -21,7 +38,7 @@ export interface Review {
   reviewerEmail: string;
   rating: number;
   comment: string;
-  date: string;
+  date?: string;
 }
 
 export interface User {
