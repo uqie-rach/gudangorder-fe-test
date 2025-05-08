@@ -3,12 +3,13 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react"
+
+import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
 interface ProductCardProps {
-  id: string
+  id: number
   title: string
   price: number
   originalPrice?: number
@@ -72,7 +73,7 @@ export default function ProductCard({
             </span>
           )}
 
-          <Link href={`/products/${id}`} className="block">
+          <Link href={`/products/${title.replaceAll(' ', '-')}`} className="block">
             <div className="relative h-48 overflow-hidden">
               <Image
                 src={image || "/placeholder.svg?height=200&width=200"}
@@ -89,21 +90,21 @@ export default function ProductCard({
               }`}
           >
             <button
-              onClick={() => onQuickView?.(id)}
+              onClick={() => onQuickView?.(id.toString())}
               className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
               aria-label="Quick view"
             >
               <Eye className="h-4 w-4 text-gray-600" />
             </button>
             <button
-              onClick={() => onAddToCart?.(id)}
+              onClick={() => onAddToCart?.(id.toString())}
               className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
               aria-label="Add to cart"
             >
               <ShoppingCart className="h-4 w-4 text-gray-600" />
             </button>
             <button
-              onClick={() => onAddToWishlist?.(id)}
+              onClick={() => onAddToWishlist?.(id.toString())}
               className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
               aria-label="Add to wishlist"
             >
@@ -141,7 +142,7 @@ export default function ProductCard({
 export const ProductCardSkeleton = () => {
   return (
     <div className="w-full p-4">
-      <Skeleton className="w-full h-[300px] mb-4" />
+      <Skeleton className="w-[240px] h-[300px] mb-4" />
       <div className="space-y-2">
         <Skeleton className="w-1/2 h-4" />
         <Skeleton className="w-3/4 h-4" />
