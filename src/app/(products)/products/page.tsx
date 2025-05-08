@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
+
 import Breadcrumb from "@/components/breadcrumbs";
 import { Pagination } from "@/components/pagination";
+
 import ProductCard, { ProductCardSkeleton } from "./_components/product-card";
 import Sidebar from "./_components/sidebar";
+
 import { Product } from "@/lib/types";
 
 export default function ProductsPage() {

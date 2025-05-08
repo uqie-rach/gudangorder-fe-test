@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { ProductPreviewProps } from '@/lib/types';
+
 import { ThumbnailList } from './thumbnail-list';
 import { MainImage } from './main-image';
+
+import { ProductPreviewProps } from '@/lib/types';
 
 export const ProductPreview = ({ images }: ProductPreviewProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
