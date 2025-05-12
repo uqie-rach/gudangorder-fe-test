@@ -10,7 +10,7 @@ import "@/css/magnific-popup.css"
 import "@/css/main.css"
 import "@/css/slick.css"
 import "@/css/spacing.css"
-import "@/css/swiper-bundle.css"
+// import "@/css/swiper-bundle.css"
 import '@smastrom/react-rating/style.css'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
