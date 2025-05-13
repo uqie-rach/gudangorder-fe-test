@@ -139,27 +139,45 @@ export default function CartPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems")
-    if (storedCartItems && storedCartItems.length > 0) {
-      setCartItems(JSON.parse(storedCartItems))
-      setIsLoading(false)
-    } else {
-      const timer = setTimeout(() => {
-        setCartItems(productDummy.map(product => ({
-          id: product.id.toString(),
-          name: product.title,
-          price: product.price,
-          originalPrice: product.price / (1 - product.discountPercentage / 100),
-          quantity: 1,
-          image: product.thumbnail,
-          vendor: product.brand,
-          inStock: product.stock > 0,
-        })))
-        setIsLoading(false)
-      }, 1500) // Simulate 1.5 second loading time
-      return () => clearTimeout(timer)
+  const storedCartItems = localStorage.getItem("cart");
+
+  let shouldInitialize = true;
+
+  if (storedCartItems) {
+    try {
+      const parsedItems = JSON.parse(storedCartItems);
+      if (Array.isArray(parsedItems) && parsedItems.length > 0) {
+        setCartItems(parsedItems);
+        shouldInitialize = false;
+      }
+    } catch (error) {
+      console.error("Failed to parse stored cart items:", error);
     }
-  }, [])
+  }
+
+  if (shouldInitialize) {
+    const formattedCartItems = productDummy.map(product => ({
+      id: product.id.toString(),
+      name: product.title,
+      price: product.price,
+      originalPrice: product.price / (1 - product.discountPercentage / 100),
+      quantity: 1,
+      image: product.thumbnail,
+      vendor: product.brand,
+      inStock: product.stock > 0,
+    }));
+
+    const timer = setTimeout(() => {
+      setCartItems(formattedCartItems);
+    }, 1500);
+
+    localStorage.setItem("cart", JSON.stringify(formattedCartItems));
+
+    return () => clearTimeout(timer);
+  }
+
+  setIsLoading(false);
+}, []);
 
 
   const [couponCode, setCouponCode] = useState("")
@@ -187,121 +205,119 @@ export default function CartPage() {
   return (
     <main>
       <div className="container mx-auto px-4 py-8">
-        
-        {!isLoading ? 
-        <div className="flex flex-col lg:flex-row gap-8 mb-4">
-          {/* Left side: Cart items */}
-          <div className="lg:w-3/4">
-            <Table>
-              <TableHeader className="bg-gray-100">
-                <TableRow>
-                  <TableHead className="w-[50%]">Product</TableHead>
-                  <TableHead className="text-center">Price</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center">Total</TableHead>
-                  <TableHead className="w-[50px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {cartItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      <div className="flex gap-4">
-                        <div className="w-20 h-20 relative">
-                          <Image src={item.image || "/placeholder.svg"} alt={item.name} fill className="object-contain" />
-                        </div>
-                        <div>
-                          <h5 className="font-light">{item.name}</h5>
-                          <p className="text-green-600 text-sm">In stock</p>
-                          <p className="text-sm text-gray-600">Vendor: {item.vendor}</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="font-medium">${item.price.toFixed(2)}</div>
-                      {item.originalPrice > item.price && (
-                        <div className="text-gray-500 line-through text-sm">${item.originalPrice.toFixed(2)}</div>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex justify-center">
-                        <div className="flex border rounded-md">
-                          <button
-                            className="px-3 py-1 border-r"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          >
-                            −
-                          </button>
-                          <span className="px-4 py-1">{item.quantity}</span>
-                          <button
-                            className="px-3 py-1 border-l"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center font-medium">${(item.price * item.quantity).toFixed(2)}</TableCell>
-                    <TableCell>
-                      <button onClick={() => removeItem(item.id)} className="text-gray-500 hover:text-red-500">
-                        <Trash2 size={20} />
-                      </button>
-                    </TableCell>
+        {!isLoading ?
+          <div className="flex flex-col lg:flex-row gap-8 mb-4">
+            {/* Left side: Cart items */}
+            <div className="lg:w-3/4">
+              <Table>
+                <TableHeader className="bg-gray-100">
+                  <TableRow>
+                    <TableHead className="w-[50%]">Product</TableHead>
+                    <TableHead className="text-center">Price</TableHead>
+                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center">Total</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            <div className="mt-8">
-              <div className="flex flex-col items-start gap-2">
-                <div>Coupon Code:</div>
-                <div className="flex">
-                  <Input
-                    type="text"
-                    placeholder="Enter Coupon Code"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    className="rounded-r-none"
-                  />
-                  <Button onClick={applyCoupon} className="rounded-l-none h-14 bg-[#001529] hover:bg-[#002a4a]">
-                    Apply
-                  </Button>
+                </TableHeader>
+                <TableBody>
+                  {cartItems.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <div className="flex gap-4">
+                          <div className="w-20 h-20 relative">
+                            <Image src={item.image || "/placeholder.svg"} alt={item.name} fill className="object-contain" />
+                          </div>
+                          <div>
+                            <h5 className="font-light">{item.name}</h5>
+                            <p className="text-green-600 text-sm">In stock</p>
+                            <p className="text-sm text-gray-600">Vendor: {item.vendor}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="font-medium">${item.price.toFixed(2)}</div>
+                        {item.originalPrice > item.price && (
+                          <div className="text-gray-500 line-through text-sm">${item.originalPrice.toFixed(2)}</div>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex justify-center">
+                          <div className="flex border rounded-md">
+                            <button
+                              className="px-3 py-1 border-r"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            >
+                              −
+                            </button>
+                            <span className="px-4 py-1">{item.quantity}</span>
+                            <button
+                              className="px-3 py-1 border-l"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center font-medium">${(item.price * item.quantity).toFixed(2)}</TableCell>
+                      <TableCell>
+                        <button onClick={() => removeItem(item.id)} className="text-gray-500 hover:text-red-500">
+                          <Trash2 size={20} />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="mt-8">
+                <div className="flex flex-col items-start gap-2">
+                  <div>Coupon Code:</div>
+                  <div className="flex">
+                    <Input
+                      type="text"
+                      placeholder="Enter Coupon Code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      className="rounded-r-none"
+                    />
+                    <Button onClick={applyCoupon} className="rounded-l-none h-14 bg-[#001529] hover:bg-[#002a4a]">
+                      Apply
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right side: Order summary */}
-          <div className="lg:w-1/4">
-            <div className="border p-6 rounded-md">
-              <div className="flex justify-between text-lg font-medium mb-4">
-                <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
-              </div>
+            {/* Right side: Order summary */}
+            <div className="lg:w-1/4">
+              <div className="border p-6 rounded-md">
+                <div className="flex justify-between text-lg font-medium mb-4">
+                  <span>Subtotal</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
 
-              <div className="flex justify-between mb-4">
-                <span>Tax</span>
-                <span>${tax.toFixed(2)}</span>
-              </div>
+                <div className="flex justify-between mb-4">
+                  <span>Tax</span>
+                  <span>${tax.toFixed(2)}</span>
+                </div>
 
-              <div className="flex justify-between text-lg font-bold mb-2">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
+                <div className="flex justify-between text-lg font-bold mb-2">
+                  <span>Total</span>
+                  <span>${total.toFixed(2)}</span>
+                </div>
 
-              <div className="text-sm text-gray-500 mb-6">(Shipping fees not included)</div>
+                <div className="text-sm text-gray-500 mb-6">(Shipping fees not included)</div>
 
-              <Button className="w-full py-6 bg-[#001529] hover:bg-[#002a4a] mb-4">Proceed to Checkout</Button>
+                <Button className="w-full py-6 bg-[#001529] hover:bg-[#002a4a] mb-4">Proceed to Checkout</Button>
 
-              <div className="text-center">
-                <Link href="/products" className="text-gray-600 hover:text-gray-900">
-                  Continue Shopping
-                </Link>
+                <div className="text-center">
+                  <Link href="/products" className="text-gray-600 hover:text-gray-900">
+                    Continue Shopping
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </div> :
+          </div> :
           <CartLoading />
         }
       </div>

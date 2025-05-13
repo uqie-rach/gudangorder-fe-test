@@ -15,6 +15,7 @@ import '@smastrom/react-rating/style.css'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import CartSidebar from "@/components/cart";
 config.autoAddCss = false
 
 const raleway = Raleway({
@@ -48,6 +49,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <CartSidebar />
       </body>
     </html>
   );
