@@ -1,12 +1,11 @@
 "use client";
 
-import Tooltips from '@/components/tooltips';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Copy, CopyCheck } from 'lucide-react';
-import Link from 'next/link';
+import { Copy } from 'lucide-react';
 import React from 'react'
 import { toast } from 'sonner';
+
+import Tooltips from '@/components/tooltips';
+import { Button } from '@/components/ui/button';
 
 interface ResourceTabProps {
   assetUrl: string;

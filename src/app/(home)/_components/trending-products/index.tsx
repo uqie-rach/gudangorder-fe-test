@@ -32,8 +32,9 @@ const TrendingProducts = () => {
       <h2 className="text-2xl font-semibold mb-4">Trending Products</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {products.length === 0 &&
-          Array.from({ length: 8 }).map((_, i) => (
-            <div key={1} className="flex-shrink-0">
+          // @ts-nocheck
+          Array.from({ length: 8 }).map((_, idx) => (
+            <div key={idx} className="flex-shrink-0">
               <ProductCardSkeleton className='w-[240px] h-[300px]' />
             </div>
           ))

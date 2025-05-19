@@ -46,7 +46,7 @@ export function AnimatedTabs({ tabs }: { tabs: Tab[] }) {
           {tabs.map((tab, index) => (
             <button
               key={tab.id}
-              ref={(el) => (tabRefs.current[index] = el)}
+              ref={(el) => { tabRefs.current[index] = el; }}
               className={`py-4 text-lg font-medium transition-colors duration-300 ${activeTab === tab.id ? "text-blue-600" : "text-gray-500 hover:text-gray-700"
                 }`}
               onClick={() => handleSetActiveTab(tab)}
