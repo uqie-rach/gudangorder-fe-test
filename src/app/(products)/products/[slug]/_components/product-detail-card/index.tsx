@@ -2,16 +2,18 @@
 
 import { toast } from "sonner"
 import { Rating } from "@smastrom/react-rating"
+// import { Minus, Plus } from "lucide-react"
 
 import { DescriptionTab } from "../product-detail-card/description-tab"
 import { AnimatedTabs } from "../product-detail-card/animated-tabs"
 import { ProductPreview } from "../product-preview"
+import ResourceTab from "./resource"
+
+import { Button } from "@/components/ui/button"
 
 import { Product } from "@/lib/types"
-import { Button } from "@/components/ui/button"
-import ResourceTab from "./resource"
+
 import { useUserStore } from "@/store/use-user"
-// import { Minus, Plus } from "lucide-react"
 
 interface ProductDetailProps {
   product: Product
