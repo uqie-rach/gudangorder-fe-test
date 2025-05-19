@@ -51,13 +51,13 @@ export default function ProductsPage() {
         />
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-5 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-5 my-12">
         <Sidebar />
 
         {showing.length === 0 && (
           <div className="col-span-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {Array.from({ length: itemsPerPage }).map((_, i) => (
-              <ProductCardSkeleton key={i} />
+              <ProductCardSkeleton key={i} className="w-full h-[300px]" />
             ))}
           </div>
         )}
@@ -80,9 +80,6 @@ export default function ProductsPage() {
                   type: "sale"
                 }
               }
-              onQuickView={() => { }}
-              onAddToCart={() => { }}
-              onAddToWishlist={() => { }}
             />
           ))}
         </div>

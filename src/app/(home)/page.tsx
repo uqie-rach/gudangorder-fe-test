@@ -8,7 +8,7 @@ import Services from "./_components/services";
 
 export default function Home() {
   return (
-    <div className="h-[3000px] space-y-20">
+    <div className="space-y-20">
       <HeroSlider />
 
       <Services />

@@ -3,10 +3,14 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react"
+import { toast } from "sonner"
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/components/ui/button"
+import { Rating } from "@smastrom/react-rating"
+import { useUserStore } from "@/store/use-user"
+import { cn } from "@/lib/utils"
 
 interface ProductCardProps {
   id: number
@@ -21,9 +25,7 @@ interface ProductCardProps {
     text: string
     type: "hot" | "trending" | "sale" | "discount"
   }
-  onQuickView?: (id: string) => void
-  onAddToCart?: (id: string) => void
-  onAddToWishlist?: (id: string) => void
+  className?: string
 }
 
 export default function ProductCard({
@@ -36,11 +38,11 @@ export default function ProductCard({
   rating,
   reviews,
   badge,
-  onQuickView,
-  onAddToCart,
-  onAddToWishlist,
+  className
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+
+  const { isAuthenticated } = useUserStore();
 
   const getBadgeColor = (type: string) => {
     switch (type) {
@@ -57,9 +59,24 @@ export default function ProductCard({
     }
   }
 
+  function handleSellNow(id: number): void {
+    if (isAuthenticated) {
+      toast.success("Berhasil menambah produk ke keranjang jual!", { richColors: true })
+    }
+
+    // if unauthenticated
+    toast.error("Daftar untuk menjual produk", { richColors: true })
+  }
+
   return (
-    <Card className="group relative overflow-hidden transition-all duration-300 shadow-none">
+    <Card className={
+      cn(
+        "group relative overflow-hidden transition-all duration-300 shadow-none hover:shadow-lg grid grid-cols-1 h-fit",
+        className
+      )
+    }>
       <CardContent className="p-0">
+        {/* Product Image area */}
         <div
           className="relative overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
@@ -74,7 +91,7 @@ export default function ProductCard({
           )}
 
           <Link href={`/products/${title.replaceAll(' ', '-')}`} className="block">
-            <div className="relative h-48 overflow-hidden">
+            <div className="relative h-64 overflow-hidden">
               <Image
                 src={image || "/placeholder.svg?height=200&width=200"}
                 alt={title}
@@ -83,66 +100,66 @@ export default function ProductCard({
               />
             </div>
           </Link>
-
-          {/* Product action buttons */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 flex justify-center space-x-2 bg-white/80 p-2 backdrop-blur-sm transition-all duration-300 ${isHovered ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
-              }`}
-          >
-            <button
-              onClick={() => onQuickView?.(id.toString())}
-              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
-              aria-label="Quick view"
-            >
-              <Eye className="h-4 w-4 text-gray-600" />
-            </button>
-            <button
-              onClick={() => onAddToCart?.(id.toString())}
-              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
-              aria-label="Add to cart"
-            >
-              <ShoppingCart className="h-4 w-4 text-gray-600" />
-            </button>
-            <button
-              onClick={() => onAddToWishlist?.(id.toString())}
-              className="rounded-full bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
-              aria-label="Add to wishlist"
-            >
-              <Heart className="h-4 w-4 text-gray-600" />
-            </button>
-          </div>
         </div>
+        {/* Product Image area */}
 
-        <div className="p-4">
-          {category && <div className="mb-1 text-xs text-blue-500">{category}</div>}
-          <h3 className="mb-1 text-sm font-medium line-clamp-2">{title}</h3>
-
-          <div className="mb-2 flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`h-3 w-3 ${i < Math.floor(rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+        {/* Product Info area */}
+        <div className="p-4 space-y-4">
+          <div className="mb-2">
+            {category && <div className="mb-1 text-sm text-blue-500">{category}</div>}
+            <h3 className="mb-1 text-sm md:text-base font-medium line-clamp-2">{title}</h3>
+            <div className="flex items-center">
+              <Rating
+                className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                value={rating}
+                readOnly
+                style={{ width: 100 }}
               />
-            ))}
-            <span className="ml-1 text-xs text-gray-500">({reviews})</span>
+              <span className="ml-1 text-xs md:text-base text-gray-500">({reviews})</span>
+            </div>
           </div>
 
-          <div className="flex items-center">
-            <span className="text-sm font-medium">${price.toFixed(2)}</span>
-            {originalPrice && (
-              <span className="ml-2 text-xs text-gray-500 line-through">${originalPrice.toFixed(2)}</span>
-            )}
+          <div>
+            <h6 className="text-gray-400 font-medium text-xs md:text-sm">Harga Modal</h6>
+            <div className="flex items-center">
+              <span className="text-sm md:text-base font-medium">${price.toFixed(2)}</span>
+              {originalPrice && (
+                <span className="ml-2 text-xs text-gray-500 line-through">${originalPrice.toFixed(2)}</span>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h6 className="text-gray-400 font-medium text-xs md:text-sm">Rekomendasi harga jual</h6>
+            <div className="flex items-center">
+              <span className="text-sm md:text-base font-medium text-orange-500">${price.toFixed(2)} - ${price.toFixed(2)}</span>
+            </div>
           </div>
         </div>
+        {/* Product Info area */}
       </CardContent>
+      <CardFooter className="h-fit self-end">
+        {/* Action */}
+        <Button className="w-full uppercase py-2 border-primary text-primary font-bold hover:bg-blue-500/10" variant="outline" size="lg" onClick={() => handleSellNow(id)}>
+          Jual Sekarang
+        </Button>
+        {/* Action */}
+      </CardFooter>
     </Card>
   )
 }
 
-export const ProductCardSkeleton = () => {
+export const ProductCardSkeleton = (
+  { className: classNames }: { className?: string }
+) => {
   return (
     <div className="w-full p-4">
-      <Skeleton className="w-[240px] h-[300px] mb-4" />
+      <Skeleton className={
+        cn(
+          "mb-4 ",
+          classNames
+        )
+      } />
       <div className="space-y-2">
         <Skeleton className="w-1/2 h-4" />
         <Skeleton className="w-3/4 h-4" />

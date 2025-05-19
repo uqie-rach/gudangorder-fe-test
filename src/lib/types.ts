@@ -1,5 +1,6 @@
 export interface Product {
   id: number;
+  buyerUrl: string;
   title: string;
   rating: number;
   price: number;
