@@ -31,7 +31,7 @@ export const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 50); 
+      setIsScrolled(scrollPosition > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -42,7 +42,7 @@ export const Navbar = () => {
     setIsOpened(!isOpened);
   }
 
-   const toggleCart = useCartSidebarStore((state) => state.toggle)
+  const toggleCart = useCartSidebarStore((state) => state.toggle)
 
   return (
     <>
