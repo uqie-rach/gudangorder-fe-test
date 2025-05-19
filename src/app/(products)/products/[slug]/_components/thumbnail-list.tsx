@@ -20,7 +20,7 @@ export const ThumbnailList = ({
   return (
     <div
       ref={scrollRef}
-      className="flex md:flex-col justify-center  items-center gap-2 max-h-[600px] overflow-y-auto py-2 scrollbar-thin scrollbar-thumb-gray-300"
+      className="flex justify-center items-center gap-2 max-h-[600px] overflow-y-auto py-2 scrollbar-thin scrollbar-thumb-gray-300"
     >
       {images.map((imageUrl, index) => (
         <button
