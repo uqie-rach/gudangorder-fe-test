@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { toast } from "sonner"
 import { Rating } from "@smastrom/react-rating"
 
