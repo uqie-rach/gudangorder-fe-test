@@ -7,6 +7,7 @@ import ProductCard, { ProductCardSkeleton } from "@/app/(products)/products/_com
 
 import { Product } from "@/lib/types"
 import { mockProducts } from "@/lib/data/products"
+import { Button } from "@/components/ui/button"
 
 
 export default function NewArrivals() {
@@ -45,18 +46,6 @@ export default function NewArrivals() {
     }
   }
 
-  const handleQuickView = (id: string) => {
-    console.log(`Quick view for product ${id}`)
-  }
-
-  const handleAddToCart = (id: string) => {
-    console.log(`Added product ${id} to cart`)
-  }
-
-  const handleAddToWishlist = (id: string) => {
-    console.log(`Added product ${id} to wishlist`)
-  }
-
   return (
     <section className="py-10">
       <div className="container mx-auto px-4">
@@ -66,20 +55,24 @@ export default function NewArrivals() {
             <span className="absolute -bottom-1 left-0 h-1 w-12 bg-red-500"></span>
           </h2>
           <div className="flex space-x-2">
-            <button
+            <Button
+              variant='outline'
+              size='icon'
               onClick={scrollLeft}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition-colors hover:bg-gray-100"
               aria-label="Previous products"
             >
               <ArrowLeft className="h-4 w-4" />
-            </button>
-            <button
+            </Button>
+            <Button
+              variant='outline'
+              size='icon'
               onClick={scrollRight}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition-colors hover:bg-gray-100"
               aria-label="Next products"
             >
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -90,7 +83,7 @@ export default function NewArrivals() {
         >
           {products.length === 0 &&
             Array.from({ length: 8 }).map((_, i) => (
-              <ProductCardSkeleton key={i} />
+              <ProductCardSkeleton key={i} className="w-64 h-[300px]" />
             ))
           }
           {products.length !== 0 && products.map((product) => (
@@ -110,9 +103,7 @@ export default function NewArrivals() {
                     type: "sale"
                   }
                 }
-                onQuickView={handleQuickView}
-                onAddToCart={handleAddToCart}
-                onAddToWishlist={handleAddToWishlist}
+                className="h-full"
               />
             </div>
           ))}

@@ -4,34 +4,48 @@ import React from 'react'
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+import { Send } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Newsletter = () => {
+
+  const handleSubscribeNews = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    toast.success('Berhasil subscribe!', { richColors: true })
+    e.currentTarget.reset();
+  }
+
   return (
     <section className="tp-subscribe-area pt-70 pb-65 theme-bg p-relative z-index-1">
       <div className="tp-subscribe-shape">
-        <img
+        <Image
           className="tp-subscribe-shape-1"
           src="/assets/img/subscribe/subscribe-shape-1.png"
           alt="Subscribe to gudangorder newsletter image"
-          loading='lazy'
+          width={608}
+          height={173}
         />
-        <img
+        <Image
           className="tp-subscribe-shape-2"
           src="/assets/img/subscribe/subscribe-shape-2.png"
           alt="Subscribe to gudangorder newsletter image"
-          loading='lazy'
+          width={102}
+          height={17}
         />
-        <img
+        <Image
           className="tp-subscribe-shape-3"
           src="/assets/img/subscribe/subscribe-shape-3.png"
           alt="Subscribe to gudangorder newsletter image"
-          loading='lazy'
+          width={27}
+          height={26}
         />
-        <img
+        <Image
           className="tp-subscribe-shape-4"
           src="/assets/img/subscribe/subscribe-shape-4.png"
           alt="Subscribe to gudangorder newsletter image"
-          loading='lazy'
+          width={120}
+          height={190}
         />
         {/* <!-- plane shape --> */}
         <div className="tp-subscribe-plane">
@@ -44,25 +58,24 @@ const Newsletter = () => {
           </svg>
         </div>
       </div>
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-xl-7 col-lg-7">
-            <div className="tp-subscribe-content">
-              <span>Sale 20% off all store</span>
-              <h3 className="tp-subscribe-title">Subscribe our Newsletter</h3>
-            </div>
-          </div>
-          <div className="col-xl-5 col-lg-5">
-            <div className="tp-subscribe-form">
-              <form action="#">
-                <div className="tp-subscribe-input">
-                  <Input type="email" placeholder="Enter Your Email" />
-                  <Button type="submit">Subscribe</Button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+      <div className="container grid grid-cols-1 md:grid-cols-2 items-center">
+        <h2 className="text-white">Subscribe ke berita kami</h2>
+        <form className="flex items-center gap-2">
+          <Input
+            type="email"
+            placeholder="Masukkan email anda"
+            className="bg-white text-black placeholder:text-black"
+          />
+
+          <Button
+            className='w-14 h-14 p-0'
+            variant='destructive'
+            type='submit'
+            onClick={handleSubscribeNews}
+          >
+            <Send size={10} />
+          </Button>
+        </form>
       </div>
     </section>
   )

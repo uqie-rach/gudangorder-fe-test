@@ -33,11 +33,13 @@ const TrendingProducts = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {products.length === 0 &&
           Array.from({ length: 8 }).map((_, i) => (
-            <ProductCardSkeleton key={i} />
+            <div key={1} className="flex-shrink-0">
+              <ProductCardSkeleton className='w-[240px] h-[300px]' />
+            </div>
           ))
         }
         {products.slice(0, 8).map((product) => (
-          <div key={product.id} className="w-full sm:w-64 flex-shrink-0">
+          <div key={product.id} className="w-full flex-shrink-0">
             <ProductCard
               id={product.id}
               title={product.title}
@@ -53,9 +55,6 @@ const TrendingProducts = () => {
                   type: "sale"
                 }
               }
-              onQuickView={() => { }}
-              onAddToCart={() => { }}
-              onAddToWishlist={() => { }}
             />
           </div>
         ))}
