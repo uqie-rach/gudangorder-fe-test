@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
@@ -40,8 +39,6 @@ export default function ProductCard({
   badge,
   className
 }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
   const { isAuthenticated } = useUserStore();
 
   const getBadgeColor = (type: string) => {
@@ -60,6 +57,7 @@ export default function ProductCard({
   }
 
   function handleSellNow(id: number): void {
+    console.log("Sell Now clicked", id)
     if (isAuthenticated) {
       toast.success("Berhasil menambah produk ke keranjang jual!", { richColors: true })
     }
@@ -79,8 +77,6 @@ export default function ProductCard({
         {/* Product Image area */}
         <div
           className="relative overflow-hidden"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
           {badge && (
             <span

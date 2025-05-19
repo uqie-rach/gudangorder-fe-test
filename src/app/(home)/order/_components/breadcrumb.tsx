@@ -15,20 +15,20 @@ const PATH_LABELS: { [key: string]: string } = {
 
 export default function Breadcrumb() {
   const pathname = usePathname();
-  
+
   // Split the pathname and remove empty segments
   const pathSegments = pathname.split('/').filter(segment => segment !== '');
-  
+
   // Get the current page title
-  const currentPageTitle = pathSegments.length > 0 
-    ? PATH_LABELS[pathSegments[pathSegments.length - 1]] || 
-      pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() + 
-      pathSegments[pathSegments.length - 1].slice(1)
+  const currentPageTitle = pathSegments.length > 0
+    ? PATH_LABELS[pathSegments[pathSegments.length - 1]] ||
+    pathSegments[pathSegments.length - 1].charAt(0).toUpperCase() +
+    pathSegments[pathSegments.length - 1].slice(1)
     : 'Home';
 
   // Generate breadcrumb items
   const breadcrumbItems = [
-    { label: PATH_LABELS[''], href: '/' },
+    { label: PATH_LABELS[''], href: '/', isLast: false },
     ...pathSegments.map((segment, index) => ({
       label: PATH_LABELS[segment] || segment.charAt(0).toUpperCase() + segment.slice(1),
       href: `/${pathSegments.slice(0, index + 1).join('/')}`,
@@ -57,8 +57,8 @@ export default function Breadcrumb() {
                       {item.label}
                     </span>
                   ) : (
-                    <Link 
-                      href={item.href} 
+                    <Link
+                      href={item.href}
                       className="text-gray-600 hover:text-blue-500 text-xl "
                     >
                       {item.label}

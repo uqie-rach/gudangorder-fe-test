@@ -30,6 +30,8 @@ export default function ProductDetailCard(
   };
 
   const handleSellNow = (id: number) => {
+    console.log("Sell Now clicked", id)
+
     if (isAuthenticated) {
       toast.success("Berhasil menambah produk ke keranjang jual!", { richColors: true })
     }

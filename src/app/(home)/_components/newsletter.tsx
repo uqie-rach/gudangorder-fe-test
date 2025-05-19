@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react'
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
@@ -10,10 +8,8 @@ import { toast } from 'sonner';
 
 const Newsletter = () => {
 
-  const handleSubscribeNews = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubscribeNews = () => {
     toast.success('Berhasil subscribe!', { richColors: true })
-    e.currentTarget.reset();
   }
 
   return (

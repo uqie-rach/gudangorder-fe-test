@@ -63,7 +63,7 @@ export function ReviewsTab({ reviews, rating }: ReviewsTabProps) {
       console.log("Review submitted:", review)
       toast.success("Review submitted successfully!")
 
-    } catch (error) {
+    } catch {
       toast.error("Error submitting review")
     }
   }
