@@ -55,7 +55,7 @@ export default function OrderTrackingPage() {
 
               <Button
                 onClick={handleTrack}
-                className="w-full bg-blue-700 text-white py-4 text-lg hover:bg-blue-800 transition-colors"
+                className="w-full py-4 text-lg"
               >
                 Track
               </Button>
