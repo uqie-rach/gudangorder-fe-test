@@ -4,7 +4,7 @@ export function DescriptionTab({ description }: { description: string }) {
     <div className="prose max-w-none">
       <p className="mb-4">{description}</p>
       <p>
-        The Galaxy Tab S6 Lite is your super carryable note-taking, go-getting companion. It comes with a large 10.4 &quot;
+        The Galaxy Tab S6 Lite is your super carryable note-taking, go-getting companion. It comes with a large 10.4&quot;
         immersive display and a premium metal finish. And with the included S Pen, you can effortlessly write, draw or
         doodle - the S Pen attaches magnetically right to your tablet and charges wirelessly, so you never have to worry
         about losing it.

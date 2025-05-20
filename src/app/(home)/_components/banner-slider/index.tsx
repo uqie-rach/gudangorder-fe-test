@@ -76,7 +76,7 @@ export default function BannerSlider() {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [currentSlide, isAnimating])
+  }, [currentSlide, isAnimating, direction])
 
   return (
     <div className="relative h-[700px] md:h-[300px] w-full overflow-hidden">

@@ -10,11 +10,13 @@ import "@/css/magnific-popup.css"
 import "@/css/main.css"
 import "@/css/slick.css"
 import "@/css/spacing.css"
-import "@/css/swiper-bundle.css"
+// import "@/css/swiper-bundle.css"
 import '@smastrom/react-rating/style.css'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import { Navbar } from "@/components/navbar";
+import Footer from "@/components/footer";
 config.autoAddCss = false
 
 const raleway = Raleway({
@@ -46,8 +48,10 @@ export default function RootLayout({
       <body
         className={`${raleway.className} ${jost.className} antialiased mt-[120px]`}
       >
+        <Navbar />
         {children}
         <Toaster />
+        <Footer />
       </body>
     </html>
   );

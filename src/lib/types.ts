@@ -1,5 +1,6 @@
 export interface Product {
   id: number;
+  buyerUrl: string;
   title: string;
   rating: number;
   price: number;
@@ -80,10 +81,14 @@ export interface Address {
 }
 
 export interface CartItem {
-  id: number;
-  productId: number;
-  quantity: number;
-  product: Product;
+  id: string
+  name: string
+  price: number
+  originalPrice: number
+  quantity: number
+  image: string
+  inStock: boolean
+  vendor: string
 }
 
 
