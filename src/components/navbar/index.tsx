@@ -161,9 +161,8 @@ export const Navbar = () => {
                         ) : (
                           <li>
                             <Button
-                              variant='default'
-                              className='text-white hover:text-white h-fit py-2 px-3'
-                              size='sm'
+                              variant='secondary'
+                              size='lg'
                               onClick={() => {
                                 router.push('/login');
                               }}
