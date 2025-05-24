@@ -1,4 +1,88 @@
 
+export const mayarProducts =
+{
+  "statusCode": 200,
+  "messages": "success",
+  "hasMore": false,
+  "pageCount": 1,
+  "pageSize": 10,
+  "page": 1,
+  "data": [
+    {
+      "id": "08a3df4d-ae2e-47a2-89fe-a66c01f79ab7",
+      "qty": 3,
+      "amount": 20000,
+      "category": "Perawatan & Kecantikan",
+      "createdAt": 1745292955092,
+      "description": "<p>HANDUK DENGAN BAHAN KATUN SANGAT MENYERAP AIR.</p>\n",
+      "link": "handuk-katun",
+      "type": "physical_product",
+      "status": "active",
+      "name": "HANDUK KATUN",
+      "limit": null,
+      "redirectUrl": "",
+      "installmentId": null,
+      "event": null,
+      "order": {
+        "id": "56a3d5da-9380-4591-a397-9f648c52c28d",
+        "variant": null,
+        "length": 10,
+        "width": 10,
+        "weight": 1000
+      },
+      "coverImageId": null,
+      "multipleImageId": "2eded335-d6da-4339-a469-c4f5e83534a0",
+      "coverImage": null,
+      "multipleImage": [
+        {
+          "id": "4d7062a2-1d18-46f4-bdd1-ab91d53e3362",
+          "fileType": "jpeg",
+          "createdAt": 1745292927014,
+          "updatedAt": 1745293527014,
+          "url": "https://media.mayar.id/images/4d7062a2-1d18-46f4-bdd1-ab91d53e3362.jpeg"
+        }
+      ]
+    },
+    {
+      "id": "697ee057-5141-4562-9d96-263c22beba14",
+      "qty": 3,
+      "amount": 50000,
+      "category": "Perlengkapan Rumah",
+      "createdAt": 1745591982520,
+      "description": "<p>Bunga Pipa hias warna kuning</p>\n",
+      "link": "pipe-flower",
+      "type": "physical_product",
+      "status": "active",
+      "name": "Pipe Flower ",
+      "limit": null,
+      "redirectUrl": "",
+      "installmentId": null,
+      "event": null,
+      "order": {
+        "id": "8e676358-6fbf-48f4-8cab-9216c0673b8d",
+        "variant": "{\"options\":[{\"name\":\"Kuning\",\"options\":[\"Kuning\"]},{\"name\":\"Hijau\",\"options\":[\"Hijau\"]},{\"name\":\"Merah\",\"options\":[\"Merah\"]}],\"details\":[{\"details\":[{\"name\":\"Kuning\",\"value\":\"Kuning\"},{\"name\":\"Hijau\",\"value\":\"Hijau\"},{\"name\":\"Merah\",\"value\":\"Merah\"}],\"amount\":50000,\"sku\":\"PER/PIP/KUN/HIJ/MER/000\",\"qty\":3,\"isVisible\":true,\"option\":\"KUNING/HIJAU/MERAH\"}]}",
+        "length": 25,
+        "width": 30,
+        "weight": 10
+      },
+      "coverImageId": null,
+      "multipleImageId": "24add615-5d69-45e0-90e2-57f1d7a5d40b",
+      "coverImage": null,
+      "multipleImage": [
+        {
+          "id": "4fcff8dd-5c9b-420c-b20f-2ecc9ba0e51d",
+          "fileType": "jpeg",
+          "createdAt": 1745591956976,
+          "updatedAt": 1745592556976,
+          "url": "https://media.mayar.id/images/4fcff8dd-5c9b-420c-b20f-2ecc9ba0e51d.jpeg"
+        }
+      ]
+    }
+  ],
+  "total": 9
+}
+
+
 export const mockProducts = [
   {
     "id": 1,
