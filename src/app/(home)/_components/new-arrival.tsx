@@ -1,39 +1,37 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { startTransition, useEffect, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import ProductCard, { ProductCardSkeleton } from "@/app/(products)/products/_components/product-card"
-
-import { Product } from "@/lib/types"
-import { mockProducts } from "@/lib/data/products"
 import { Button } from "@/components/ui/button"
 
+import { getProductsAction, QueryParams } from "@/action/product"
+
+import { Product } from "@/lib/types/product"
 
 export default function NewArrivals() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [products, setProducts] = useState<Product[] | []>([]);
 
-
-  const fetchProducts = async () => {
-    try {
-      const response = await new Promise(res => {
-        setTimeout(() => {
-          res(mockProducts)
-        }, 1000)
-      })
-
-      setProducts(response as Product[]);
-    } catch (e) {
-      console.error(e);
-    }
+  function getProducts(query?: QueryParams[]) {
+    startTransition(() => {
+      getProductsAction({ query })
+        .then((res) => {
+          if (res?.statusCode === 200) {
+            const data = res?.data;
+            setProducts(data ?? []);
+          }
+        })
+    })
   };
 
   // 1) Fetch sekali saja
   useEffect(() => {
+    getProducts();
+  }, []); // <- kosong
 
-    fetchProducts();
-  }, []);
+
   const scrollLeft = () => {
     if (containerRef.current) {
       containerRef.current.scrollBy({ left: -300, behavior: "smooth" })
@@ -87,23 +85,9 @@ export default function NewArrivals() {
             ))
           }
           {products.length !== 0 && products.map((product) => (
-            <div key={product.id} className="w-64 flex-shrink-0">
+            <div key={product.id} className="w-[300px] flex-shrink-0">
               <ProductCard
-                id={product.id}
-                title={product.title}
-                price={product.price}
-                originalPrice={product.price}
-                image={product.images[0]}
-                category={product.category}
-                rating={product.rating}
-                reviews={product.reviews.length}
-                badge={
-                  {
-                    text: "New",
-                    type: "sale"
-                  }
-                }
-                className="h-full"
+                product={product}
               />
             </div>
           ))}

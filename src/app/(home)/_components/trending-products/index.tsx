@@ -1,64 +1,50 @@
 'use client';
 
+import React, { useEffect, useState, useTransition } from 'react'
+
 import ProductCard, { ProductCardSkeleton } from '@/app/(products)/products/_components/product-card';
-import { mockProducts } from '@/lib/data/products';
-import { Product } from '@/lib/types';
-import React, { useEffect, useState } from 'react'
+
+import { Product } from '@/lib/types/product';
+import { getProductsAction, QueryParams } from '@/action/product';
 
 const TrendingProducts = () => {
   const [products, setProducts] = useState<Product[] | []>([]);
+  const [isPending, startTransition] = useTransition();
 
-  const fetchProducts = async () => {
-    try {
-      const response = await new Promise(res => {
-        setTimeout(() => {
-          res(mockProducts)
-        }, 1000)
-      })
-
-      setProducts(response as Product[]);
-    } catch (e) {
-      console.error(e);
-    }
+  function getProducts(query?: QueryParams[]) {
+    startTransition(() => {
+      getProductsAction({ query })
+        .then((res) => {
+          setProducts(res?.data ?? []);
+        })
+    })
   };
 
-  // 1) Fetch sekali saja
   useEffect(() => {
+    getProducts();
+  }, []); // => initial load
 
-    fetchProducts();
-  }, []);
   return (
     <section className="mt-12 container">
       <h2 className="text-2xl font-semibold mb-4">Trending Products</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {products.length === 0 &&
-          // @ts-nocheck
-          Array.from({ length: 8 }).map((_, idx) => (
-            <div key={idx} className="flex-shrink-0">
-              <ProductCardSkeleton className='w-[240px] h-[300px]' />
-            </div>
-          ))
+        {
+          isPending ? (
+            Array.from({ length: 6 }).map((_, index) => (
+              <ProductCardSkeleton key={index} className='w-full h-[300px]' />
+            ))
+          ) : (
+            products.length > 0 ? (
+              products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-500">
+                No trending products available.
+              </div>
+            )
+          )
         }
-        {products.slice(0, 8).map((product) => (
-          <div key={product.id} className="w-full flex-shrink-0">
-            <ProductCard
-              id={product.id}
-              title={product.title}
-              price={product.price}
-              originalPrice={product.price}
-              image={product.images[0]}
-              category={product.category}
-              rating={product.rating}
-              reviews={product.reviews.length}
-              badge={
-                {
-                  text: "New",
-                  type: "sale"
-                }
-              }
-            />
-          </div>
-        ))}
       </div>
     </section>
   )
