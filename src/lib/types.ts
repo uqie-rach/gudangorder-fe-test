@@ -1,3 +1,5 @@
+import { Image } from "./types/product";
+
 export interface Product {
   id: number;
   buyerUrl: string;
@@ -99,9 +101,8 @@ export interface Brand {
 }
 
 export interface Category {
-  id: string;
+  id: number;
   name: string;
-  slug: string;
 }
 
 export interface ProductPreviewProps {
@@ -109,7 +110,7 @@ export interface ProductPreviewProps {
 }
 
 export interface ThumbnailListProps {
-  images: string[];
+  images: Image[];
   activeIndex: number;
   onImageClick: (index: number) => void;
 }
