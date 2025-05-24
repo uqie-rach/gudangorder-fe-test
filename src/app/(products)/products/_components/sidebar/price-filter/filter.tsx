@@ -1,8 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { formatPriceToRupiah } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+
 import { Button } from '@/components/ui/button';
+
+import ClearFilterButton from '../clear-filter-button';
+
+import { formatPriceToRupiah } from '@/lib/utils';
+
+import { useFilters } from '@/store/use-filters';
 
 interface PriceFilterProps {
   onSubmit: (values: { min: number; max: number }) => void;
@@ -21,6 +27,20 @@ export const Filter = ({
   const [maxPrice, setMaxPrice] = useState<string>(initialMax.toString());
   const [isMinFocused, setIsMinFocused] = useState(false);
   const [isMaxFocused, setIsMaxFocused] = useState(false);
+
+  const { priceRange } = useFilters();
+
+  useEffect(() => {
+    // Set initial values from priceRange
+    if (priceRange && priceRange.length === 2) {
+      setMinPrice(priceRange[0].toString());
+      setMaxPrice(priceRange[1].toString());
+    } else {
+      setMinPrice(initialMin.toString());
+      setMaxPrice(initialMax.toString());
+    }
+  }, [priceRange])
+
 
   // Handle input change for minimum price
   const handleMinChange = (value: string) => {
@@ -43,11 +63,11 @@ export const Filter = ({
     const max = parseInt(maxPrice) || 0;
 
     // Ensure max is greater than or equal to min
-    const validatedMax = Math.max(min, max);
+    // const validatedMax = Math.max(min, max);
 
     onSubmit({
       min,
-      max: validatedMax
+      max
     });
   };
 
@@ -62,8 +82,8 @@ export const Filter = ({
   return (
     <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
       <div className="space-y-2">
-        <label htmlFor="minPrice" className="block text-sm font-medium text-gray-700">
-          Minimum Price
+        <label htmlFor="minPrice" className="block text-sm font-medium text-blue-400">
+          Harga Minimum
         </label>
         <input
           id="minPrice"
@@ -78,8 +98,8 @@ export const Filter = ({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700">
-          Maximum Price
+        <label htmlFor="maxPrice" className="block text-sm font-medium text-blue-400">
+          Harga Maksimum
         </label>
         <input
           id="maxPrice"
@@ -93,12 +113,16 @@ export const Filter = ({
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-      >
-        Apply Filter
-      </Button>
+      <div className="flex gap-3">
+        <Button
+          type="submit"
+          className="w-full shadow-none bg-blue-50 text-blue-500 hover:bg-blue-100"
+          size='lg'
+        >
+          Terapkan Filter
+        </Button>
+        <ClearFilterButton />
+      </div>
     </form>
   );
 };

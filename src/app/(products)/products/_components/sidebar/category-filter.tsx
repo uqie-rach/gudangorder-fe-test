@@ -2,33 +2,44 @@
 
 import { useEffect, useState, useTransition } from 'react'
 
-import { mockCategories } from '@/lib/data/categories';
-import { Category } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
+
+import { mockCategories } from '@/lib/data/categories';
+import { Category } from '@/lib/types'
+;
+import { useFilters } from '@/store/use-filters';
 
 const CategoryFilter = () => {
   const [categories, setCategories] = useState<Category[] | []>([])
+
+  const { setCategory } = useFilters();
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []) // => fetch once on mount
 
   const fetchCategories = () => {
     startTransition(() => {
       new Promise<Category[]>(resolve => {
         setTimeout(() => {
           resolve(mockCategories);
-        }, 2000);
+        }, 1000);
       }).then(res => {
         setCategories(res);
       })
     })
-  }
+  } // => simulate fetching categories
 
-  useEffect(() => {
-    fetchCategories();
-  }, [])
+  function handleSetCategory(e: React.MouseEvent<HTMLButtonElement>) {
+    const category = e.currentTarget.textContent || 'all';
+    setCategory(category);
+  } // => set category filter
+
   return (
     <div>
       <div className="tp-shop-widget mb-50">
-        <h3 className="tp-shop-widget-title">Categories</h3>
+        <h3 className="text-lg font-semibold">Kategori</h3>
 
         <div className="tp-shop-widget-content">
           <div className="tp-shop-widget-categories">
@@ -36,7 +47,7 @@ const CategoryFilter = () => {
               {
                 !isPending && categories.length > 0 ? categories.map((category) => (
                   <li key={category.id}>
-                    <button>{category.name} <span>10</span></button>
+                    <button onClick={handleSetCategory}>{category.name}</button>
                   </li>
                 )) : [...Array(8)].map((_, i) => (
                   <li key={i} className='flex justify-between items-center'>

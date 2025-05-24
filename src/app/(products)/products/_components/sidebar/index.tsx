@@ -1,14 +1,11 @@
-import BrandFilter from "./brand-filter";
 import CategoryFilter from "./category-filter";
 import PriceFilter from "./price-filter";
 
-
 const Sidebar = () => {
   return (
-    <div className="tp-shop-widget">
+    <div className="sticky top-24">
       <PriceFilter />
       <CategoryFilter />
-      <BrandFilter />
     </div>
   )
 }
