@@ -17,6 +17,7 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import Providers from "./providers";
 config.autoAddCss = false
 
 const raleway = Raleway({
@@ -49,7 +50,9 @@ export default function RootLayout({
         className={`${raleway.className} ${jost.className} antialiased mt-[120px]`}
       >
         <Navbar />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         <Toaster />
         <Footer />
       </body>
