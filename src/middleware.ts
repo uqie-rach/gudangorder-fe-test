@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const privateRoutes = [
   '/dashboard(.*)',
-  '/profile(.*)',
+  // '/profile(.*)',
 ]
 
 export function middleware(req: NextRequest) {
