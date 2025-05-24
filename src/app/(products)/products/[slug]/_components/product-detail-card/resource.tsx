@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy } from 'lucide-react';
+import { Copy, Images, PictureInPicture2, ShoppingBag } from 'lucide-react';
 import React from 'react'
 import { toast } from 'sonner';
 
@@ -10,11 +10,12 @@ import { Button } from '@/components/ui/button';
 interface ResourceTabProps {
   assetUrl: string;
   buyerUrl: string;
+  productId: string;
 }
 
 export default function ResourceTab(
   {
-    assetUrl, buyerUrl
+    assetUrl, buyerUrl, productId
   }: ResourceTabProps
 ) {
 
@@ -33,11 +34,11 @@ export default function ResourceTab(
       <div>
         <h5>Link aset produk</h5>
         <div className="cursor-pointer flex items-center">
+          <Images />
           <Button
             variant='link'
             className='px-4 py-2'
             onClick={() => {
-              // url to another website
               window.open(assetUrl, '_blank')
             }}
           >
@@ -47,10 +48,9 @@ export default function ResourceTab(
             description='Salin URL'
             side='top'
           >
-
             <Button
               variant='link'
-              className='bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-100'
+              className='rounded-lg text-gray-600 hover:bg-gray-100'
               onClick={() => copyToClipboard(assetUrl)}
               size='icon'
             >
@@ -62,11 +62,11 @@ export default function ResourceTab(
       <div>
         <h5>Link untuk pembeli</h5>
         <div className="cursor-pointer flex items-center">
+          <ShoppingBag />
           <Button
             variant='link'
             className='px-4 py-2'
             onClick={() => {
-              // url to another website
               window.open(buyerUrl, '_blank')
             }}
           >
@@ -76,10 +76,37 @@ export default function ResourceTab(
             description='Salin URL'
             side='top'
           >
-
             <Button
               variant='link'
-              className='bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-100'
+              className='rounded-lg text-gray-600 hover:bg-gray-100'
+              onClick={() => copyToClipboard(buyerUrl)}
+              size='icon'
+            >
+              <Copy className='size-4' />
+            </Button>
+          </Tooltips>
+        </div>
+      </div>
+      <div>
+        <h5>Link landing page</h5>
+        <div className="cursor-pointer flex items-center">
+          <PictureInPicture2 />
+          <Button
+            variant='link'
+            className='px-4 py-2'
+            onClick={() => {
+              window.open(`/products/landing-page/${productId}`, '_blank')
+            }}
+          >
+            {productId}
+          </Button>
+          <Tooltips
+            description='Salin URL'
+            side='top'
+          >
+            <Button
+              variant='link'
+              className='rounded-lg text-gray-600 hover:bg-gray-100'
               onClick={() => copyToClipboard(buyerUrl)}
               size='icon'
             >

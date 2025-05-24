@@ -35,7 +35,7 @@ export const ThumbnailList = ({
           aria-label={`View product image ${index + 1}`}
         >
           <Image
-            src={imageUrl}
+            src={imageUrl.url}
             alt={`Product image ${index + 1}`}
             fill
             className={cn(

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { MainImageProps } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
+interface MainImageProps {
+  imageUrl: string;
+}
 
 export const MainImage = ({ imageUrl }: MainImageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);

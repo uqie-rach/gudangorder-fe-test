@@ -1,4 +1,3 @@
-import { Product } from "@/lib/types";
 import ProductDetailCard from "./_components/product-detail-card";
 
 interface ProductDetailProps {
@@ -8,18 +7,11 @@ interface ProductDetailProps {
 }
 
 const ProductDetail = async ({ params }: ProductDetailProps) => {
-  const { slug } = params; // bukan await params
-
-  const response = await fetch(`https://dummyjson.com/products/search?q=${slug}`);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  const data = (await response.json()) as { products: Product[] };
+  const { slug } = params;
 
   return (
     <div className="container">
-      <ProductDetailCard product={data.products[0]} />
+      <ProductDetailCard id={slug} />
     </div>
   )
 }
